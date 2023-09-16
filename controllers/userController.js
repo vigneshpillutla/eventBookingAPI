@@ -9,11 +9,11 @@ const User = db.users;
 //hashing users password before its saved to the database with bcrypt
 const signup = async (req, res) => {
  try {
-   const { email, password } = req.body;
+   const { email, password, isAdmin } = req.body;
    const data = {
      email,
      password: await bcrypt.hash(password, 10),
-     isAdmin: false
+     isAdmin
    };
    //saving the user
    const user = await User.create(data);
