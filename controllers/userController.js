@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 // Assigning users to the variable User
 const User = db.users;
+const {sports:Sport,venues:Venue,equipments:Equipment} = db;
 
 //signing a user up
 //hashing users password before its saved to the database with bcrypt
@@ -84,7 +85,32 @@ const { email, password } = req.body;
  }
 };
 
+const getSports = async(req,res) => {
+  const sports = await Sport.findAll();
+
+  return res.json(sports)
+}
+
+const getVenueAndEquipmentBySport = async(req,res) => {
+  const {sportId} = req.params;
+
+  const result = await Venue.findAll({where:{sportId},include:[
+    {
+      model:Sport
+    },
+    {
+      model: Equipment,
+      through: {
+        attributes: []
+      }
+    }
+  ]})
+  return res.json(result);
+}
+
 module.exports = {
  signup,
  login,
+ getSports,
+ getVenueAndEquipmentBySport
 };

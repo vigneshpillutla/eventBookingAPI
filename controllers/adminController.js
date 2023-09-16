@@ -32,7 +32,7 @@ const addVenue = async(req,res) => {
       addressLine1,durationInMinutes,sportId
     })
     await venue.setEquipment(equipments)
-    return res.status(200).json("done")
+    return res.status(200).json(venue)
   } catch (error) {
     return res.status(500)
   }
