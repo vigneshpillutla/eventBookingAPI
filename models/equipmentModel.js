@@ -5,6 +5,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     
-  }, { timestamps: true },)
+  }, { timestamps: true ,
+    tableName: "equipments"
+  })
   return Equipment
 }

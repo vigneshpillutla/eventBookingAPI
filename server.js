@@ -4,6 +4,7 @@ const dotenv = require('dotenv').config()
 const cookieParser = require('cookie-parser')
  const db = require('./models')
  const userRoutes = require ('./routes/userRoutes')
+ const adminRoutes = require('./routes/adminRoutes')
  
 
 //setting up your port
@@ -20,10 +21,12 @@ app.use(cookieParser())
 //synchronizing the database and forcing it to false so we dont lose data
 db.sequelize.sync({ force: true }).then(() => {
     console.log("db has been re sync")
+    db.populate()
 })
 
 //routes for the user API
 app.use('/api/users', userRoutes)
+app.use('/api/admin',adminRoutes)
 
 //listening to server connection
 app.listen(PORT, () => console.log(`Server is connected on ${PORT}`))
