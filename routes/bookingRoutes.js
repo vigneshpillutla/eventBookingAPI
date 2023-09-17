@@ -8,7 +8,7 @@ const router = express.Router()
 
 router.use(isAuthenticated)
 
-router.post('/booking',createBookingRequest)
+router.post('/book',createBookingRequest)
 
 router.get('/booking',getPendingBookingRequests)
 
