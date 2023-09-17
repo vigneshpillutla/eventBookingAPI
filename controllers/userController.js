@@ -108,6 +108,8 @@ const getVenueAndEquipmentBySport = async(req,res) => {
   return res.json(result);
 }
 
+
+
 module.exports = {
  signup,
  login,
