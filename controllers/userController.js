@@ -4,10 +4,10 @@ const jwt = require("jsonwebtoken");
 
 // Assigning users to the variable User
 const User = db.users;
-const {sports:Sport,venues:Venue,equipments:Equipment} = db;
+const {sports:Sport,venues:Venue,equipments:Equipment,equipmentInventories:EquipmentInventory} = db;
 
-//signing a user up
-//hashing users password before its saved to the database with bcrypt
+// signing a user up
+// hashing users password before its saved to the database with bcrypt
 const signup = async (req, res) => {
  try {
    const { email, password, isAdmin } = req.body;
@@ -28,8 +28,6 @@ const signup = async (req, res) => {
      });
 
      res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
-     console.log("user", JSON.stringify(user, null, 2));
-     console.log(token);
      //send users details
      return res.status(201).send(user);
    } else {
@@ -67,11 +65,9 @@ const { email, password } = req.body;
          expiresIn: 1 * 24 * 60 * 60 * 1000,
        });
 
-       //if password matches wit the one in the database
+       //if password matches with the one in the database
        //go ahead and generate a cookie for the user
        res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
-       console.log("user", JSON.stringify(user, null, 2));
-       console.log(token);
        //send user data
        return res.status(201).send(user);
      } else {
@@ -100,8 +96,8 @@ const getVenueAndEquipmentBySport = async(req,res) => {
     },
     {
       model: Equipment,
-      through: {
-        attributes: []
+      through:{
+        attributes: ['stock']
       }
     }
   ]})

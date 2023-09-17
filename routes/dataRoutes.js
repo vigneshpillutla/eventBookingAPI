@@ -7,6 +7,6 @@ const router = express.Router()
 
 router.get('/sports',getSports)
 
-router.get('/venue/:sportId',getVenueAndEquipmentBySport)
+router.get('/venue/sport/:sportId',getVenueAndEquipmentBySport)
 
 module.exports = router

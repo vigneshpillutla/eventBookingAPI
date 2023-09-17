@@ -52,6 +52,7 @@ const isAuthenticated = async (req,res,next) => {
 
 const isAdmin = async (req,res,next) => {
   if(req.isAuthenticated && req.user.isAdmin){
+    req.isAdmin = true
     next()
   }
   else{

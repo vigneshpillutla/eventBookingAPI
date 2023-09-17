@@ -31,11 +31,11 @@ const addVenue = async(req,res) => {
       name,
       addressLine1,durationInMinutes,sportId
     })
-    const instanceMethods = Object.getOwnPropertyNames(Venue.prototype);
-
-    console.log('Instance methods for Venue model:');
-    console.log(instanceMethods);
-    await venue.setEquipment(equipments)
+        
+    const addEquipmentsAndStockToTable = equipments.map(({equipmentId,stock})=> venue.addEquipment(equipmentId,{through:{stock}}))
+    
+    await Promise.all(addEquipmentsAndStockToTable)
+    
     return res.status(200).json(venue)
   } catch (error) {
     console.log(error)
