@@ -8,7 +8,7 @@ const addEquipments = async(req,res) => {
     await Equipment.bulkCreate(equipments);
     return res.status(200).json("created")
   } catch (error) {
-    return res.status(500)
+    return res.status(500).send(error)
   }
 }
 
@@ -18,7 +18,7 @@ const addSport = async(req,res) => {
     await Sport.create(sport)
     return res.status(200).json("Created")
   } catch (error) {
-    return res.status(500)
+    return res.status(500).send(error)
     
   }
 }
@@ -31,10 +31,15 @@ const addVenue = async(req,res) => {
       name,
       addressLine1,durationInMinutes,sportId
     })
-    await venue.setEquipments(equipments)
+    const instanceMethods = Object.getOwnPropertyNames(Venue.prototype);
+
+    console.log('Instance methods for Venue model:');
+    console.log(instanceMethods);
+    await venue.setEquipment(equipments)
     return res.status(200).json(venue)
   } catch (error) {
-    return res.status(500)
+    console.log(error)
+    return res.status(500).send(error)
   }
 }
 

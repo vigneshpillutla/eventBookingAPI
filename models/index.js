@@ -4,7 +4,8 @@ const {Sequelize, DataTypes} = require('sequelize')
 //Database connection with dialect of postgres specifying the database we are using
 //port for my database is 5432
 //database name is discover
-const sequelize = new Sequelize(`postgres://postgres:root@localhost:5432/eventBooking`, {dialect: "postgres"})
+const sequelize = new Sequelize(`postgres://postgres:root@localhost:5432/eventBooking`, {dialect: "postgres",
+logging: console.log})
 
 //checking if connection is done
     sequelize.authenticate().then(() => {
@@ -38,6 +39,12 @@ BookingRequest.belongsTo(Venue)
 
 Equipment.belongsToMany(BookingRequest,{through: EquipmentBookingQuantity })
 BookingRequest.belongsToMany(Equipment,{through: EquipmentBookingQuantity})
+
+
+const instanceMethods = Object.getOwnPropertyNames(BookingRequest.prototype);
+
+console.log('Instance methods for BookingRequest model:');
+console.log(instanceMethods);
 
 db.users = User
 db.sports = Sport

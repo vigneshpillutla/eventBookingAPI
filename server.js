@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser')
  const userRoutes = require ('./routes/userRoutes')
  const adminRoutes = require('./routes/adminRoutes')
  const dataRoutes = require('./routes/dataRoutes')
+ const bookingRoutes = require('./routes/bookingRoutes')
+
  
 
 //setting up your port
@@ -22,13 +24,14 @@ app.use(cookieParser())
 //synchronizing the database and forcing it to false so we dont lose data
 db.sequelize.sync({ force: true }).then(() => {
     console.log("db has been re sync")
-    // db.populate()
+    db.populate()
 })
 
 //routes for the user API
 app.use('/api/users', userRoutes)
 app.use('/api/admin',adminRoutes)
 app.use('/api/data',dataRoutes)
+app.use('/api/venue',bookingRoutes)
 
 //listening to server connection
 app.listen(PORT, () => console.log(`Server is connected on ${PORT}`))
