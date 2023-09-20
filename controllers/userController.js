@@ -27,7 +27,7 @@ const signup = async (req, res) => {
        expiresIn: 1 * 24 * 60 * 60 * 1000,
      });
 
-     res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
+     res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true, origin:'http://localhost:5174' });
      //send users details
      return res.status(201).send(user);
    } else {
@@ -44,6 +44,8 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
  try {
 const { email, password } = req.body;
+console.log(email);
+console.log(password);
 
    //find a user by their email
    const user = await User.findOne({
@@ -87,6 +89,12 @@ const getSports = async(req,res) => {
   return res.json(sports)
 }
 
+const getEquipments = async(req,res) => {
+  const equipments = await Equipment.findAll();
+
+  return res.json(equipments)
+}
+
 const getVenueAndEquipmentBySport = async(req,res) => {
   const {sportId} = req.params;
 
@@ -110,5 +118,6 @@ module.exports = {
  signup,
  login,
  getSports,
+ getEquipments,
  getVenueAndEquipmentBySport
 };

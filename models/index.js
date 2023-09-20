@@ -2,7 +2,7 @@ const { request } = require('express')
 const {Sequelize, DataTypes} = require('sequelize')
 
 // database name is eventBooking
-const sequelize = new Sequelize(`postgres://postgres:root@localhost:5432/eventBooking`, {dialect: "postgres",
+const sequelize = new Sequelize(`postgres://postgres:postgres@localhost:5432/eventBooking`, {dialect: "postgres",
 logging: console.log})
 
 //checking if connection is done
