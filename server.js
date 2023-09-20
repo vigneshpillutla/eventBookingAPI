@@ -13,24 +13,36 @@ const db = require('./models')
  
  //setting up your port
  const PORT = process.env.PORT || 8080
- 
+
+ // Add origins to be allowed here
+ const allowedOrigins = ['http://localhost:5173'];
  //assigning the variable app to express
  const app = express()
  
  //middleware
  app.use(cors({
-    origin:"http://localhost:5173",
-    credentials:true
- }))
+    origin: function(origin, callback){
+      // allow requests with no origin 
+      // (like mobile apps or curl requests)
+      if(!origin) return callback(null, true);
+      if(allowedOrigins.indexOf(origin) === -1){
+        var msg = 'The CORS policy for this site does not ' +
+                  'allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+    credentials: true
+  }));
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 // //synchronizing the database and forcing it to false so we dont lose data
-// db.sequelize.sync({ force: true }).then(() => {
-//     console.log("db has been re sync")
-//     db.populate()
-// })
+db.sequelize.sync({ force: true }).then(() => {
+    console.log("db has been re sync")
+    db.populate()
+})
 
 //routes for the user API
 app.use('/api/users', userRoutes)

@@ -5,6 +5,9 @@ const {Sequelize, DataTypes} = require('sequelize')
 const sequelize = new Sequelize(`postgres://postgres:postgres@localhost:5432/eventBooking`, {dialect: "postgres",
 logging: console.log})
 
+// const sequelize = new Sequelize(`postgres://postgres:root@localhost:5432/eventBooking`, {dialect: "postgres",
+// logging: console.log})
+
 //checking if connection is done
     sequelize.authenticate().then(() => {
         console.log(`Database connected to eventBooking`)
@@ -28,6 +31,9 @@ const EquipmentInventory = require('./equipmentInventoryModel') (sequelize,DataT
 // Configuring relations
 Sport.hasMany(Venue)
 Venue.belongsTo(Sport)
+
+Sport.hasMany(Equipment)
+Equipment.belongsTo(Sport)
 
 Venue.belongsToMany(Equipment, {through: EquipmentInventory})
 Equipment.belongsToMany(Venue, {through: EquipmentInventory})
@@ -64,15 +70,15 @@ db.populate = async() => {
     )
     
     await Equipment.bulkCreate([
-        {name:"Table Tennis Table"},
-        {name:"tennis racket"},
-        {name:"ping pong ball"},
-        {name:"cricket bat"},
-        {name:"ball"},
-        {name:"wicket"},
-        {name:"pad"},
-        {name:"football"},
-        {name:"gloves"},
+        {name:"Table Tennis Table",sportId:3},
+        {name:"tennis racket",sportId:3},
+        {name:"ping pong ball",sportId:3},
+        {name:"cricket bat",sportId:1},
+        {name:"ball",sportId:1},
+        {name:"wicket",sportId:1},
+        {name:"pad",sportId:1},
+        {name:"football",sportId:2},
+        {name:"gloves",sportId:2},
     ])
 }
 

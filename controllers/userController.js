@@ -27,7 +27,7 @@ const signup = async (req, res) => {
        expiresIn: 1 * 24 * 60 * 60 * 1000,
      });
 
-     res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true, origin:'http://localhost:5174' });
+     res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true});
      //send users details
      return res.status(201).send(user);
    } else {
@@ -95,6 +95,13 @@ const getEquipments = async(req,res) => {
   return res.json(equipments)
 }
 
+const getEquipmentsBySport = async(req,res) => {
+  const {sportId} = req.params;
+  const equipments = await Equipment.findAll({where:{sportId}})
+
+  return res.json(equipments)
+}
+
 const getVenueAndEquipmentBySport = async(req,res) => {
   const {sportId} = req.params;
 
@@ -119,5 +126,6 @@ module.exports = {
  login,
  getSports,
  getEquipments,
+ getEquipmentsBySport,
  getVenueAndEquipmentBySport
 };
